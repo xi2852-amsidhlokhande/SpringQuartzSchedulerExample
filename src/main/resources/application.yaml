@@ -1,0 +1,50 @@
+server:
+  port: 8585
+
+logging:
+  level:
+    org:
+      quartz: INFO
+      springframework:
+        scheduling:
+          quartz: INFO
+spring:
+  profiles:
+    active:
+      - oracle
+---
+spring:
+  profiles: h2
+  datasource:
+    url: jdbc:h2:mem:scheduler_db_test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+    initialization-mode: ALWAYS
+    schema:
+      - classpath*:/schema/quartz_tables_h2.sql
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    properties:
+      - hibernate.format_sql=true
+  h2:
+    console:
+      enabled: true
+
+
+
+---
+spring:
+  profiles: oracle
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:XE
+    username: SPRING-BOOT-QUARTZ
+    password: Tiger$123
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+  quartz:
+    jdbc:
+      initialize-schema: NEVER
+      schema: classpath:schema/schema-oracle.sql
+    job-store-type: JDBC
+

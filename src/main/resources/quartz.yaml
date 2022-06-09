@@ -1,0 +1,19 @@
+org:
+  quartz:
+    scheduler:
+      instanceName: spring-boot-quartz-demo
+      instanceId: AUTO
+    jobStore:
+      class: org.quartz.impl.jdbcjobstore.JobStoreTX
+      driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+      tablePrefix: QRTZ_
+      isClustered: true
+      clusterCheckinInterval: 10000
+      useProperties: false
+      misfireThreshold: 12000
+    threadPool:
+      class: org.quartz.simpl.SimpleThreadPool
+      threadCount: 25
+      threadPriority: 5
+      threadsInheritContextClassLoaderOfInitializingThread: true
+
